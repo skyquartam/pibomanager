@@ -4,19 +4,19 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./features/reception/reception.module').then(mod => mod.ReceptionModule)
+    loadChildren: './features/reception/reception.module#ReceptionModule'
   },
   {
     path: 'analytics',
-    loadChildren: () => import('./features/analytics/analytics.module').then(mod => mod.AnalyticsModule)
+    loadChildren: './features/analytics/analytics.module#AnalyticsModule'
   },
   {
     path: 'pets',
-    loadChildren: () => import('./features/pets/pets.module').then(mod => mod.PetsModule)
+    loadChildren: './features/pets/pets.module#PetsModule'
   },
   {
     path: 'owners',
-    loadChildren: () => import('./features/owners/owners.module').then(mod => mod.OwnersModule)
+    loadChildren: './features/owners/owners.module#OwnersModule'
   },
   { path: 'reception', redirectTo: '', pathMatch: 'full' }
 ];
