@@ -14,7 +14,7 @@ export class PetsTableComponent implements OnInit, OnChanges {
 
   constructor() {}
 
-  displayedColumns = ['name', 'microchip'];
+  displayedColumns = ['edit', 'name', 'microchip'];
   dataSource = new MatTableDataSource<Pet>([]);
 
   ngOnInit() {

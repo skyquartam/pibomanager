@@ -5,6 +5,15 @@
 </div>
 
 <mat-table #table [dataSource]="dataSource" [trackBy]="trackByUid" matSort class="animate">
+  <ng-container matColumnDef="edit">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let pet">
+      <button mat-icon-button (click)="openDialog(pet)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
     <mat-cell *matCellDef="let pet"> {{ pet.name }} </mat-cell>
@@ -13,13 +22,6 @@
   <ng-container matColumnDef="microchip">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Microchip </mat-header-cell>
     <mat-cell *matCellDef="let pet"> {{ pet.microchip }} </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="edit">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
-    <mat-cell *matCellDef="let pet">
-      <button mat-raised-button color="primary" (click)="openDialog(pet)">Edit</button>
-    </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
