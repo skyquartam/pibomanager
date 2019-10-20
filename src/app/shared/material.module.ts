@@ -15,7 +15,8 @@ import {
   MatDatepickerModule,
   MatRadioModule,
   MatSelectModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MAT_DATE_LOCALE
 } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
@@ -67,6 +68,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatRadioModule,
     MatSelectModule,
     MatCheckboxModule
-  ]
+  ],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'it' }]
 })
 export class MaterialModule {}

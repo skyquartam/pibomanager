@@ -7,7 +7,11 @@ import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
   providedIn: 'root'
 })
 export class FirestoreService {
-  constructor(private af: AngularFirestore) {}
+  constructor(private af: AngularFirestore) { }
+
+  public updateDoc<T>(path: string, newValue: Partial<T>) {
+    return from(this.af.doc<T>(path).update(newValue));
+  }
 
   public getCollection<T, U>(path: string, refPath?: string): Observable<T[]> {
     return this.af
@@ -31,12 +35,12 @@ export class FirestoreService {
                     const ref = pet[refPath] as DocumentReference;
                     return ref;
                   })
-                  .map(ref => ref.get())
+                  .map(ref => ref && ref.get())
               )
             ).pipe(
               map(resolved =>
-                resolved.map(r => {
-                  return { ...r.data(), id: r.id };
+                resolved && resolved.map(r => {
+                  return r && { ...r.data(), id: r.id };
                 })
               ),
               map(res => {

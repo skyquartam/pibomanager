@@ -15,7 +15,7 @@
     </ng-container>
 
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Name of pets </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
       <mat-cell *matCellDef="let pet"> {{ pet.name }} </mat-cell>
     </ng-container>
 
@@ -27,8 +27,8 @@
     <ng-container matColumnDef="owner">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Owner </mat-header-cell>
       <mat-cell *matCellDef="let pet">
-        {{ pet.owner.firstName }} {{ pet.owner.lastName }}
-        <a mat-icon-button [routerLink]="['owners', pet.owner.id]">
+        {{ pet.owner?.firstName }} {{ pet.owner?.lastName }}
+        <a mat-icon-button [routerLink]="['/', 'owners', pet.owner && pet.owner.id || '']">
           <mat-icon>open_in_new</mat-icon>
         </a>
       </mat-cell>

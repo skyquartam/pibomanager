@@ -6,6 +6,7 @@ import { FirestoreService } from '../../../../shared/services/firestore.service'
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { PetFormComponent } from '../pet-form/pet-form.component';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pets-page',
@@ -18,7 +19,7 @@ export class PetsPageComponent implements OnInit, OnDestroy {
   onwerSub: Subscription;
   owners: Owner[] = [];
 
-  constructor(private titleService: TitleService, private firestore: FirestoreService, public dialog: MatDialog) {}
+  constructor(private titleService: TitleService, private firestore: FirestoreService, public dialog: MatDialog, private af: AngularFirestore) {}
 
   ngOnInit() {
     this.titleService.title = 'Pets';
@@ -37,8 +38,22 @@ export class PetsPageComponent implements OnInit, OnDestroy {
       minWidth: '80vw',
       data: { pet: { ...pet }, owners: this.owners }
     });
-    dialogRef.afterClosed().subscribe(data => {
-      console.log(`New pet: `, data);
+    dialogRef.afterClosed().subscribe((data: Pet) => {
+      if (data) {
+        console.log(`Received pet from form `, data);
+        this.firestore.updateDoc(`/pets/${pet.id}`, data).subscribe(() => {
+          const oldOwner = this.af.doc<Owner>(`/owners/${pet.owner.id}`);
+          oldOwner.get().pipe(take(1)).subscribe(oldOwnerData => {
+            const value = oldOwnerData.data();
+            this.af.doc(`/owners/${pet.owner.id}`).update({
+              pets: value.pets.filter(p => p.id !== pet.id)
+            });
+            (data.owner as DocumentReference).update({
+              pets: [this.af.doc(`/pets/${pet.id}`).ref]
+            });
+          });
+        });
+      }
     });
   }
 }

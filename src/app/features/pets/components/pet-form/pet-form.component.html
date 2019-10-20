@@ -4,20 +4,6 @@
     <mat-step [stepControl]="form.get('general')">
       <form fxLayout="column" [formGroup]="form.get('general')">
         <ng-template matStepLabel>General Data</ng-template>
-        <!-- <div class="input-row">
-        <mat-radio-group
-          aria-label="Select kind of animal"
-          formControlName="kind"
-          fxLayout="row"
-          fxLayout.lt-md="column"
-          fxLayoutGap="20px"
-          fxLayoutGap.lt-md="0px"
-        >
-          <mat-radio-button value="Cane" fxFlex="100%">Dog</mat-radio-button>
-          <mat-radio-button value="Gatto" fxFlex="100%">Cat</mat-radio-button>
-          <mat-radio-button value="Coniglio" fxFlex="100%">Rabbit</mat-radio-button>
-        </mat-radio-group>
-      </div> -->
         <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
           <mat-form-field fxFlex>
             <mat-label>Kind</mat-label>

@@ -1,10 +1,5 @@
 import { DocumentReference } from '@angular/fire/firestore';
 
-export interface BirthDate {
-  seconds: number;
-  nanoseconds: number;
-}
-
 export interface Pet {
   id: string;
   affinity: string;
@@ -12,7 +7,7 @@ export interface Pet {
   affinityOther: string;
   allergies: string;
   awards: boolean;
-  birthDate: BirthDate;
+  birthDate: firebase.firestore.Timestamp;
   breed: string;
   illnesses: string;
   kind: string;
