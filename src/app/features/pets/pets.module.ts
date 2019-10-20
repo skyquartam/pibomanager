@@ -11,6 +11,9 @@ const routes: Routes = [
   {
     path: '',
     component: PetsPageComponent
+  }, {
+    path: ':id',
+    component: PetsPageComponent
   }
 ];
 
