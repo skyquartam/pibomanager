@@ -20,6 +20,8 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 export class PetsTableComponent implements OnInit, OnChanges {
   @Input() pets: Pet[] = [];
   @Output() clickedPet = new EventEmitter<Pet>();
+  @Output() deletePet = new EventEmitter<Pet>();
+  @Output() createPet = new EventEmitter<void>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -42,10 +44,18 @@ export class PetsTableComponent implements OnInit, OnChanges {
   }
 
   trackByUid(a, b) {
-    return true;
+    return a.id === b.id;
   }
 
   openDialog(pet: Pet) {
     this.clickedPet.emit(pet);
+  }
+
+  openDeleteDialog(pet: Pet) {
+    this.deletePet.emit(pet);
+  }
+
+  onCreate() {
+    this.createPet.emit()
   }
 }

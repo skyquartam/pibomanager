@@ -1,15 +1,19 @@
-<div class="example-header">
+<div class="example-header" fxLayout="row">
   <mat-form-field class="filter">
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" />
   </mat-form-field>
+  <button (click)="onCreate()" mat-fab color="primary"><mat-icon>add</mat-icon></button>
 </div>
 <div class="table-container">
   <mat-table #table [dataSource]="dataSource" [trackBy]="trackByUid" matSort class="animate">
     <ng-container matColumnDef="edit">
-      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
       <mat-cell *matCellDef="let pet">
         <button mat-icon-button (click)="openDialog(pet)">
           <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="openDeleteDialog(pet)">
+          <mat-icon>delete</mat-icon>
         </button>
       </mat-cell>
     </ng-container>

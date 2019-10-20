@@ -1,6 +1,6 @@
 import { DocumentReference } from '@angular/fire/firestore';
 
-export interface Pet {
+export class Pet {
   id: string;
   affinity: string;
   affinityHumans: boolean;

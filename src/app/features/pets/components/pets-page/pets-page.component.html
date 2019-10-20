@@ -1,3 +1,3 @@
 <section>
-  <app-pets-table [pets]="pets" (clickedPet)="onClickedPet($event)"></app-pets-table>
+  <app-pets-table [pets]="pets" (createPet)="onCreate()" (clickedPet)="onClickedPet($event)" (deletePet)="onDeletePet($event)"></app-pets-table>
 </section>

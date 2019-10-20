@@ -31,7 +31,7 @@ export class PetFormComponent implements OnInit {
     this.form = this.fb.group({
       general: this.fb.group({
         name: [this.pet.name, Validators.required],
-        birthDate: [{ value: this.pet.birthDate.toDate(), disabled: true }, Validators.required],
+        birthDate: [{ value: this.pet.birthDate && this.pet.birthDate.toDate(), disabled: true }, Validators.required],
         kind: [this.pet.kind, Validators.required],
         sex: [this.pet.sex, Validators.required],
         size: [this.pet.size, Validators.required],
