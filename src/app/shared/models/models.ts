@@ -6,6 +6,7 @@ export interface BirthDate {
 }
 
 export interface Pet {
+  id: string;
   affinity: string;
   affinityHumans: boolean;
   affinityOther: string;
@@ -20,11 +21,18 @@ export interface Pet {
   nPensioni: number;
   name: string;
   notes: string;
-  owner: DocumentReference;
+  owner: DocumentReference | Owner;
   productName: string;
   sex: string;
   size: string;
   sofaBed: boolean;
   sterilization: boolean;
   therapy: string;
+}
+
+export interface Owner {
+  id: string;
+  firstName: string;
+  lastName: string;
+  pets: DocumentReference[] | Pet[];
 }

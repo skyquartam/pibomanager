@@ -1,5 +1,15 @@
-import { Component, OnInit, Input, OnChanges, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
-import { Pet } from '../../../../shared/models/Pet';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChange,
+  SimpleChanges,
+  ViewChild,
+  Output,
+  EventEmitter
+} from '@angular/core';
+import { Pet } from '../../../../shared/models/models';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 @Component({
@@ -9,12 +19,13 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 })
 export class PetsTableComponent implements OnInit, OnChanges {
   @Input() pets: Pet[] = [];
+  @Output() clickedPet = new EventEmitter<Pet>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor() {}
 
-  displayedColumns = ['edit', 'name', 'microchip'];
+  displayedColumns = ['edit', 'name', 'owner', 'microchip'];
   dataSource = new MatTableDataSource<Pet>([]);
 
   ngOnInit() {
@@ -31,11 +42,10 @@ export class PetsTableComponent implements OnInit, OnChanges {
   }
 
   trackByUid(a, b) {
-    console.log({ a, b });
     return true;
   }
 
   openDialog(pet: Pet) {
-    console.log(`Open Dialog for ${pet.name}`);
+    this.clickedPet.emit(pet);
   }
 }

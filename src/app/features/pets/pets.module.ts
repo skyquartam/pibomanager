@@ -4,6 +4,8 @@ import { PetsPageComponent } from './components/pets-page/pets-page.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { PetsTableComponent } from './components/pets-table/pets-table.component';
+import { PetFormComponent } from './components/pet-form/pet-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -13,7 +15,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [PetsPageComponent, PetsTableComponent],
-  imports: [CommonModule, RouterModule.forChild(routes), SharedModule]
+  declarations: [PetsPageComponent, PetsTableComponent, PetFormComponent],
+  imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
+  entryComponents: [PetFormComponent]
 })
 export class PetsModule {}

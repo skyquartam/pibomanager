@@ -10,8 +10,14 @@ import {
   MatTableModule,
   MatSortModule,
   MatDialogModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatStepperModule,
+  MatDatepickerModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatCheckboxModule
 } from '@angular/material';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 @NgModule({
   imports: [
@@ -30,7 +36,13 @@ import {
     MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatStepperModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatCheckboxModule
   ],
   exports: [
     MatFormFieldModule,
@@ -48,7 +60,13 @@ import {
     MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatStepperModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatCheckboxModule
   ]
 })
 export class MaterialModule {}

@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TitleService } from '../../../../shared/services/title.service';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
-import { Pet } from '../../../../shared/models/Pet';
+import { Pet, Owner } from '../../../../shared/models/models';
 import { FirestoreService } from '../../../../shared/services/firestore.service';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material';
+import { PetFormComponent } from '../pet-form/pet-form.component';
 
 @Component({
   selector: 'app-pets-page',
@@ -12,17 +14,31 @@ import { Subscription } from 'rxjs';
 })
 export class PetsPageComponent implements OnInit, OnDestroy {
   pets: Pet[] = [];
-  dataSub: Subscription;
+  petSub: Subscription;
+  onwerSub: Subscription;
+  owners: Owner[] = [];
 
-  constructor(private titleService: TitleService, private firestore: FirestoreService) {}
+  constructor(private titleService: TitleService, private firestore: FirestoreService, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.titleService.title = 'Pets';
     this.titleService.subtitle = 'Track your pets';
-    this.dataSub = this.firestore.getCollection<Pet>('/pets').subscribe(pets => (this.pets = pets));
+    this.petSub = this.firestore.getCollection<Pet, Owner>('/pets', 'owner').subscribe(pets => (this.pets = pets));
+    this.onwerSub = this.firestore.getCollection<Owner, null>('/owners').subscribe(owners => (this.owners = owners));
   }
 
   ngOnDestroy() {
-    this.dataSub.unsubscribe();
+    this.petSub.unsubscribe();
+    this.onwerSub.unsubscribe();
+  }
+
+  onClickedPet(pet: Pet) {
+    const dialogRef = this.dialog.open(PetFormComponent, {
+      minWidth: '80vw',
+      data: { pet: { ...pet }, owners: this.owners }
+    });
+    dialogRef.afterClosed().subscribe(data => {
+      console.log(`New pet: `, data);
+    });
   }
 }

@@ -1,0 +1,13 @@
+.orText {
+  line-height: 4rem;
+}
+
+.button-row {
+  margin-top: 2rem;
+}
+
+.input-row {
+  &.checkbox {
+    height: 65px;
+  }
+}

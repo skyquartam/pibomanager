@@ -1,0 +1,208 @@
+<h2 mat-dialog-title>Edit Pet</h2>
+<mat-dialog-content class="mat-typography">
+  <mat-vertical-stepper #stepper>
+    <mat-step [stepControl]="form.get('general')">
+      <form fxLayout="column" [formGroup]="form.get('general')">
+        <ng-template matStepLabel>General Data</ng-template>
+        <!-- <div class="input-row">
+        <mat-radio-group
+          aria-label="Select kind of animal"
+          formControlName="kind"
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="20px"
+          fxLayoutGap.lt-md="0px"
+        >
+          <mat-radio-button value="Cane" fxFlex="100%">Dog</mat-radio-button>
+          <mat-radio-button value="Gatto" fxFlex="100%">Cat</mat-radio-button>
+          <mat-radio-button value="Coniglio" fxFlex="100%">Rabbit</mat-radio-button>
+        </mat-radio-group>
+      </div> -->
+        <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+          <mat-form-field fxFlex>
+            <mat-label>Kind</mat-label>
+            <mat-select formControlName="kind" required>
+              <mat-option
+                *ngFor="
+                  let kind of [{ v: 'Dog', vw: 'Dog' }, { v: 'Cat', vw: 'Cat' }, { v: 'Rabbit', vw: 'Rabbit' }]
+                "
+                [value]="kind.v"
+              >
+                {{ kind.vw }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="hasError('general', 'kind', 'required')">Kind of animal is required</mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <mat-label>Sex</mat-label>
+            <mat-select formControlName="sex" required>
+              <mat-option *ngFor="let sex of [{ v: 'M', vw: 'Male' }, { v: 'F', vw: 'Female' }]" [value]="sex.v">
+                {{ sex.vw }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="hasError('general', 'sex', 'required')">Sex of animal is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Name" formControlName="name" required />
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input
+              matInput
+              placeholder="Birth Date (click the Calendar)"
+              [matDatepicker]="myDatepicker"
+              formControlName="birthDate"
+              required
+            />
+            <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #myDatepicker [startView]="'multi-year'" required disabled="false"></mat-datepicker>
+            <mat-error *ngIf="hasError('general', 'birthDate', 'required')">Birth date of animal is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+          <mat-form-field fxFlex>
+            <mat-label>Size</mat-label>
+            <mat-select formControlName="size" required>
+              <mat-option
+                *ngFor="
+                  let size of [
+                    { v: '1 - Piccola', vw: '1 - Small' },
+                    { v: '2 - Piccola/Media', vw: '2 - Small/Medium' },
+                    { v: '3 - Media', vw: '3 - Medium' },
+                    { v: '4 - Media/Grande', vw: '4 - Medium/Big' },
+                    { v: '5 - Grande', vw: '5 - Big' }
+                  ]
+                "
+                [value]="size.v"
+              >
+                {{ size.vw }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="hasError('general', 'size', 'required')">Size of animal is required</mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Microchip" formControlName="microchip" />
+          </mat-form-field>
+        </div>
+        <div class="button-row">
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="form.get('owner')">
+      <form [formGroup]="form.get('owner')">
+        <ng-template matStepLabel>Owner Data</ng-template>
+        <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+          <mat-form-field fxFlex>
+            <mat-label>Select Owner</mat-label>
+            <mat-select formControlName="id" required>
+              <mat-option *ngFor="let owner of owners" [value]="owner.id">
+                {{ owner.firstName }} {{ owner.lastName }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="hasError('owner', 'id', 'required')">Owner of animal is required</mat-error>
+          </mat-form-field>
+          <span class="orText">Or</span>
+          <button mat-button fxFlex>
+            Create Owner
+          </button>
+        </div>
+        <div class="button-row">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="form.get('health')">
+      <form [formGroup]="form.get('health')">
+        <ng-template matStepLabel>Health Data</ng-template>
+        <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+          <mat-checkbox fxFlex [fxFlexAlign]="'center'" formControlName="sterilization">Sterilization</mat-checkbox>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Illnesses" formControlName="illnesses" />
+          </mat-form-field>
+        </div>
+        <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Therapy" formControlName="therapy" />
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Product" formControlName="productName" />
+          </mat-form-field>
+        </div>
+        <div class="button-row">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="form.get('behavior')">
+      <form [formGroup]="form.get('behavior')">
+        <ng-template matStepLabel>Behavior Data</ng-template>
+        <div
+          class="input-row checkbox"
+          fxLayout="row"
+          fxLayout.lt-md="column"
+          fxLayoutGap="20px"
+          fxLayoutGap.lt-md="0px"
+        >
+          <mat-checkbox fxFlex [fxFlexAlign]="'center'" formControlName="awards">Awards</mat-checkbox>
+          <mat-checkbox fxFlex [fxFlexAlign]="'center'" formControlName="affinityHumans">Affinity Humans</mat-checkbox>
+          <mat-checkbox fxFlex [fxFlexAlign]="'center'" formControlName="sofaBed">Sofa/Bed</mat-checkbox>
+        </div>
+        <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+          <mat-form-field fxFlex>
+            <input type="number" matInput placeholder="Number of Meals" formControlName="nMeals" />
+            <mat-error *ngIf="hasError('behavior', 'nMeals', 'min')">Number of meals must be positive value</mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <mat-label>Affinity</mat-label>
+            <mat-select formControlName="affinity" required>
+              <mat-option
+                *ngFor="
+                  let affinity of [
+                    { v: 'Si', vw: 'Yes' },
+                    { v: 'No', vw: 'No' },
+                    { v: 'Solo F', vw: 'Only Females' },
+                    { v: 'Solo M', vw: 'Only Males' }
+                  ]
+                "
+                [value]="affinity.v"
+              >
+                {{ affinity.vw }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <mat-label>Affinity Other</mat-label>
+            <mat-select formControlName="affinityOther" required>
+              <mat-option
+                *ngFor="
+                  let affinity of [
+                    { v: 'Si', vw: 'Yes' },
+                    { v: 'No', vw: 'No' },
+                    { v: 'Solo F', vw: 'Only Females' },
+                    { v: 'Solo M', vw: 'Only Males' }
+                  ]
+                "
+                [value]="affinity.v"
+              >
+                {{ affinity.vw }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+          <mat-form-field fxFlex>
+            <textarea cdkTextareaAutosize matInput placeholder="Notes" formControlName="notes"></textarea>
+          </mat-form-field>
+        </div>
+      </form>
+    </mat-step>
+  </mat-vertical-stepper>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [disabled]="this.form.invalid" (click)="onSave()">Save</button>
+</mat-dialog-actions>
